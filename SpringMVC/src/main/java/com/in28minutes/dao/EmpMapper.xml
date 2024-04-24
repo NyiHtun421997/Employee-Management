@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.in28minutes.dao.EmpMapper">
+  	<resultMap type="employee" id="emp-result">
+  		<id property="empId" column="emp_id"/>
+  		<result property="name" column="emp_name"/>
+  		<result property="afflCd" column="affl_cd"/>
+  		<result property="isAdmin" column="adm_flg"/>
+  	</resultMap>
+	
+  	<select id="getAllEmployees" resultType="employee" resultMap="emp-result">
+  		SELECT emp_id,emp_name,affl_cd,adm_flg FROM h57dbanew.M_N1 WHERE fk_emp_id IS NOT NULL ORDER BY emp_id ASC
+  	</select>
+  	
+  	<select id="getAllAfflCodes" resultType="string">
+  		SELECT DISTINCT affl_cd FROM h57dbanew.M_N1 ORDER BY affl_cd ASC
+  	</select>
+  	
+  	<update id="updateEmployeeById" parameterType="employee">
+  		UPDATE h57dbanew.M_N1 SET adm_flg = #{isAdmin} WHERE  emp_id = #{empId}
+  	</update>
+  	
+  </mapper>
